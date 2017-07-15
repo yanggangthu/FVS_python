@@ -1,11 +1,9 @@
 # README
 
 # I)	THE METHOD
-This repo contains functions used to calculate maximum feedback vertex set for directed graph.
+This repository contains functions used to approximate the minimum feedback vertex set (FVS) of a directed graph, a problem whose exact solution is known to be NP-hard. This algorithms was used to estimate the size of the minimum FVS in a recent paper "Zañudo, J. G. T., Yang, G., & Albert, R. (2017). PNAS 114: 28, 7234–7239, doi: 10.1073/pnas.1617387114".
 
-This algorithm is a fast approximation based on simulating annealing(SA) of a noval local search of topological ordering.
-
-The algorithm is describe in the paper "Galinier, P., Lemamou, E. & Bouzidi, M.W. J Heuristics (2013) 19: 797. doi:10.1007/s10732-013-9224-z". The code follows the pseudocode given in Page 805 in that paper.
+This algorithm identifies a near-minimum feedback vertex set using simulated annealing (SA) and a local search of topological ordering. The algorithm is describe in the paper "Galinier, P., Lemamou, E. & Bouzidi, M.W. J Heuristics (2013) 19: 797. doi:10.1007/s10732-013-9224-z". The code follows the pseudocode given in Page 805 in that paper.
 
 The code is written in Python 2.7. The module requires NetworkX 1.11.
 
@@ -15,32 +13,32 @@ Another version written in Cython is available at https://github.com/yanggangthu
 # II) STRUCTURE OF MODULE
 Related functions are stored in FVS.py and FVS_localsearch_10_python.py. 
 
-Core functions of finding maximum sub topological ordering of a given graphp is written in FVS_localsearch_10_python.py.
+Core functions of finding a maximum sub topological ordering of a given graph (which is equivalent to identifying a minimum FVS) is written in FVS_localsearch_10_python.py.
 
-FVS.py is more like a wrapper, that deals with input and calculate the minimum  FVS by subtracting the nodes in the topological ordering from all the nodes.
+FVS.py is a wrapper, that deals with graph input and identifies a near-minimum FVS by subtracting the nodes in the topological ordering from all the nodes.
 
 FVS_test.py contains three examples illustrating how to use the code.
 
 # III)	INSTRUCTIONS  
 
 To use this module, import FVS and call FVS() just as a regular function.  
-The function can take 6 paramters listed below and the first is neccessary.  
+The function can take 6 paramters listed below and only the first (the graph) is neccessary.  
 
 Parameters
 ----------
 G : NetworkX Graph/DiGraph, result for MultiGraph is not tested  
-T_0 : the initial temperature  in SA  
+T_0 : the initial temperature in SA  
 alpha : the cooling multiplier for temperatue in the geometric cooling regime  
 maxMvt_factor : maxMvt_factor times network size is the number of iterations for the inner loop given a fixed temperatue  
 maxFail : FVS_local_search stops when maxFail number of outloops (temperatue) fail to improve the result  
 randomseed: random seed for generating random numbers  
 
-Default Parameter Value  
+Default Parameter Values  
 -----------------------
 T_0 = 0.6, alpha = 0.99, maxMvt_factor = 5, maxFail = 50, randomseed=None  
 The default values are suggested by the author of the paper.  
 T_0 and maxFail are chosen after a limited number of preliminary experiments
-alpha is chosen more arbitrarily, however alpha should be a positive number slightly small than 1.  
+alpha is chosen more arbitrarily, however alpha should be a positive number slightly smaller than 1.  
 Increase alpha or maxMvt_factor or maxFail will increase the time of finding FVS.
 
 Returns
@@ -70,7 +68,7 @@ Your result should be the same with the same randomseed.
 
 The MIT License (MIT)
 
-Copyright (c) 2017 Gang Yang.
+Copyright (c) 2017 Gang Yang and Reka Albert.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
